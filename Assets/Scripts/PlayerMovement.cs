@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float movementSpeed = 5.0f;
+    public float jumpStrength = 10.0f;
 
     private CharacterController characterController;
     private Vector3 moveDirection = Vector3.zero;
@@ -19,12 +20,20 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        moveDirection = new Vector3(Input.GetAxis("Horizontal"), moveDirection.y, Input.GetAxis("Vertical"));
+        moveDirection.x *= movementSpeed;
+        moveDirection.z *= movementSpeed;
+
         if (characterController.isGrounded)
         {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
-            moveDirection *= movementSpeed;
-            rotation = new Vector3(moveDirection.x, 0f, moveDirection.z);
+            moveDirection.y = 0;
+            if (Input.GetKey(KeyCode.Space))
+            {
+                moveDirection.y = jumpStrength;
+            }
         }
+        
+        rotation = new Vector3(moveDirection.x, 0f, moveDirection.z);
 
         if (rotation != Vector3.zero)
         {
