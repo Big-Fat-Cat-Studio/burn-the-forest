@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float movementSpeed = 5.0f;
     public float jumpStrength = 10.0f;
+    public float gravity = 20.0f;
 
     private CharacterController characterController;
     private Vector3 moveDirection = Vector3.zero;
@@ -40,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
             transform.forward = rotation;
         }
 
-        moveDirection.y -= 20.0f * Time.deltaTime;
+        moveDirection.y -= gravity * Time.deltaTime;
         characterController.Move(moveDirection * Time.deltaTime);
     }
 }
