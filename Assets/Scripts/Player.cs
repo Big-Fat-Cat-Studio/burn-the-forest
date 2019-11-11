@@ -48,6 +48,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /**
+     * Grows the character.
+     */
     public void Grow(float growAmount)
     {
         currentSize += growAmount;
@@ -55,6 +58,9 @@ public class Player : MonoBehaviour
         currentShrinkTimer = 0;
     }
 
+    /**
+     * Shrinks the character. Kills the character if their size is 0.
+     */
     private void Shrink(float shrinkAmount)
     {
         if (currentSize > 0 && vulnerable)
@@ -75,18 +81,24 @@ public class Player : MonoBehaviour
                 {
                     Grow(size);
                     vulnerable = false;
-                    StartCoroutine(Blink(3.0f));
+                    StartCoroutine(InvulnerableBlink(3.0f));
                 }
             }
         }
     }
 
+    /**
+     * Gets the size of the character.
+     */
     private float getCurrentSize()
     {
         return minimalSizeScale + currentSize / size;
     }
 
-    private IEnumerator Blink(float waitTime)
+    /**
+     * Gives the character a blinking effect, to show that it's invulnerable.
+     */
+    private IEnumerator InvulnerableBlink(float waitTime)
     {
         MeshRenderer renderer = GetComponent<MeshRenderer>();
 
